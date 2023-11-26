@@ -42,21 +42,22 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            remove_files_in_directory("resources/components")
-            if data.startswith("start"):
-                json_data = json.loads(data[6:])
-                blog = json_data.get("blog")
-                purpose = json_data.get("purpose")
-                platform = json_data.get("platform")
-                target_audience = json_data.get("target_audience")
-                if blog and purpose and platform and target_audience:
-                    report = await manager.start_streaming(blog=blog, 
-                                                           purpose=purpose,
-                                                           platform=platform, 
-                                                           target_audience=target_audience, 
-                                                           websocket=websocket)
-                else:
-                    print("Error: not enough parameters provided.")
+            print('Hey')
+            # remove_files_in_directory("resources/components")
+            # if data.startswith("start"):
+            #     json_data = json.loads(data[6:])
+            #     blog = json_data.get("blog")
+            #     purpose = json_data.get("purpose")
+            #     platform = json_data.get("platform")
+            #     target_audience = json_data.get("target_audience")
+            #     if blog and purpose and platform and target_audience:
+            #         report = await manager.start_streaming(blog=blog, 
+            #                                                purpose=purpose,
+            #                                                platform=platform, 
+            #                                                target_audience=target_audience, 
+            #                                                websocket=websocket)
+            #     else:
+            #         print("Error: not enough parameters provided.")
 
     except WebSocketDisconnect:
         await manager.disconnect(websocket)

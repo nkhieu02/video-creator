@@ -4,8 +4,8 @@ services:
     image: junction2023/video-creator
     build: ./
     environment: 
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      COQUI_API: ${COQUI_API}
-      HUGGINGFACEHUB_API_TOKEN: ${HUGGINGFACEHUB_API_TOKEN}
+      OPENAI_API_KEY: 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
+      COQUI_API: i8YBmJqMQ4seQB7mysGJJzBDtOkVaAVcpv4uq9pTRstBuQBiy1OjD38hP7bPRlAV
+      HUGGINGFACEHUB_API_TOKEN: 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
     ports:
       - 8000:8000

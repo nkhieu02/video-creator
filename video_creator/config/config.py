@@ -14,7 +14,7 @@ class Config:
         self.smart_llm_model = "gpt-3.5-turbo-16k"
         self.fast_token_limit = 2000
         self.smart_token_limit = 4000
-        self.text_2_image_model = "stabilityai/stable-diffusion-2-1"
+        self.text_2_image_model = "stabilityai/stable-diffusion-xl-base-1.0"
         self.image_2_image_model = "lambdalabs/sd-image-variations-diffusers"
         self.script_dir = os.path.dirname(os.path.abspath(__file__))
         self.compile_video_dir = os.path.abspath(os.path.join(self.script_dir, '../../resources/components/'))
