@@ -1,0 +1,11 @@
+version: '1'
+services:
+  video-creator:
+    image: junction2023/video-creator
+    build: ./
+    environment: 
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      COQUI_API: ${COQUI_API}
+      HUGGINGFACEHUB_API_TOKEN: ${HUGGINGFACEHUB_API_TOKEN}
+    ports:
+      - 8000:8000
