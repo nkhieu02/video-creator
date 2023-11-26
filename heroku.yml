@@ -1,0 +1,13 @@
+build:
+  docker:
+    web: Dockerfile
+
+env:
+  OPENAI_API_KEY: ${OPENAI_API_KEY}
+  COQUI_API: ${COQUI_API}
+  HUGGINGFACEHUB_API_TOKEN: ${HUGGINGFACEHUB_API_TOKEN}
+
+web:
+  - dockerfile: Dockerfile
+    port: 8000
+
