@@ -11,12 +11,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/site/styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .avatar {
             width: 60px;
             height: 60px;
             border-radius: 50%;
         }
+
+        .fa-facebook .svg {
+            width: 250px !important;
+            height: 250px !important;
+        }
+
 
         .agent-name {
             text-align: center;
@@ -46,13 +53,8 @@
             Say Goodbye to <br>
             <span
                     style="background-image:linear-gradient(to right, #9867F0, #ED4E50); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hours
-                    of Research</span>
+                    of Video Creating</span>
         </h1>
-        <p class="max-w-5xl mx-auto text-gray-600 mt-8" style="font-size:20px">
-            Say Hello to GPT Researcher, your AI mate for rapid insights and comprehensive research. GPT Researcher
-            takes care of everything from accurate source gathering to organization of research results - all in one
-            platform designed to make your research process a breeze.
-        </p>
         <a href="#form" class="btn btn-primary">Get Started</a>
     </div>
 </section>
@@ -62,26 +64,38 @@
                                                 alt="Auto Agent"></div>
     <form method="POST" class="mt-3" onsubmit="GPTResearcher.startResearch(); return false;">
         <div class="form-group">
-            <label for="task" class="agent-question">What would you like me to research next?</label>
-            <input type="text" id="task" name="task" class="form-control" required>
-            <input type="radio" name="agent" id="autoAgent" value="Auto Agent" checked hidden>
+            <label for="blog" class="agent-question">Blog</label>
+            <input type="text" id="blog" name="blog" class="form-control" required>
+            <!-- <input type="radio" name="agent" id="autoAgent" value="Auto Agent" checked hidden> -->
         </div>
         <div class="form-group">
             <div class="row">
-
-
             </div>
             <button type="button" id="btnShowAuto" class="btn btn-secondary mt-3 btn-show">Auto Agent</button>
         </div>
         <div class="form-group">
-            <label for="report_type" class="agent-question">What type of report would you like me to generate?</label>
-            <select name="report_type" class="form-control" required>
-                <option value="research_report">Research Report</option>
-                <option value="resource_report">Resource Report</option>
-                <option value="outline_report">Outline Report</option>
+            <label for="purpose" class="agent-question">Purpose</label>
+            <select name="purpose" class="form-control" required>
+                <option value="marketing">Marketing</option>
+                <option value="teaching">Teaching</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="target audience" class="agent-question">Target Audience</label>
+            <select name="target audience" class="form-control" required>
+                <option value="gamer">Gamer</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="platform" class="agent-question">Platform</label>
+            <select name="platform" class="form-control" required>
+                <option value="facebook">Facebook</option>
+                <option value="twitter">Twitter</option>
+                <option value="tiktok">Tiktok</option>
             </select>
         </div>
         <input type="submit" value="Research" class="btn btn-primary button-padding">
+        <a href="/resources/components/output_video.mp4" download="/resources/components/output_video.mp4" class="btn btn-primary button-padding">Download</a>
     </form>
 
     <div class="margin-div">
@@ -90,15 +104,11 @@
                         will be generated to provide the most precise and relevant research results.</p>
         <div id="output"></div>
     </div>
-    <div class="margin-div">
-        <h2>Research Report</h2>
-        <div id="reportContainer"></div>
-        <div id="reportActions">
-            <div class="alert alert-info" role="alert" id="status"></div>
-            <a id="copyToClipboard" onclick="GPTResearcher.copyToClipboard()" class="btn btn-secondary mt-3" style="margin-right: 10px;">Copy to clipboard</a>
-            <a id="downloadLink" href="#" class="btn btn-secondary mt-3" target="_blank">Download as PDF</a>
-        </div>
-    </div>
+    <div id = fb-root" ></div> <script async defer crossorigin = "anonymous" src = "https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0" nonce = "f2VCLQDi" ></script>
+    <div data-layout = "" data-size = "" ><a target = "_blank " href = "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fedition.cnn.com%2F" class="fa fa-facebook">  Facebook</a>&emsp;<a class="fa fa-twitter"
+        href="https://twitter.com/intent/tweet?text=Hello%20world"
+        data-size="large">  Twitter
+</a></div>
 </main>
 
 <footer>

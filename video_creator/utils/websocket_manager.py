@@ -45,18 +45,18 @@ class WebSocketManager:
             del self.sender_tasks[websocket]
             del self.message_queues[websocket]
 
-    async def start_streaming(self, blog, purpose, platform, websocket):
+    async def start_streaming(self, blog, purpose, platform, target_audience, websocket):
         """Start streaming the output."""
-        report = await run_agent(blog, purpose, platform, websocket)
+        report = await run_agent(blog, purpose, platform, target_audience, websocket)
         return report
 
 
-async def run_agent(blog, purpose, platform, websocket):
+async def run_agent(blog, purpose, platform, target_audience, websocket):
     """Run the agent."""
     # measure time
     start_time = datetime.datetime.now()
     # run agent
-    researcher = GPTResearcher(blog=blog, purpose=purpose, platform=platform, websocket=websocket)
+    researcher = GPTResearcher(blog=blog, purpose=purpose, platform=platform, target_audience=target_audience, websocket=websocket)
     report = await researcher.run()
     # measure time
     end_time = datetime.datetime.now()

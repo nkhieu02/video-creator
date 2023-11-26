@@ -5,6 +5,8 @@ from video_creator.master.functions import *
 from video_creator.config.config import Config
 import cv2
 from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_videoclips
+import asyncio
+import httpx
 
 CONFIG = Config()
 CLIENT = AsyncInferenceClient()
@@ -44,7 +46,7 @@ async def text_2_image(scene: int,
                        negative_prompt="low resolution, blurry",
                        num_inference_steps=30,
                        socket=None):
-    
+    await stream_output("logs", f"\n🔎 Generate image that fit the description: '{prompt}'...", socket)
     try:
         image = await CLIENT.text_to_image(prompt=prompt,
                                      negative_prompt=negative_prompt,
@@ -61,8 +63,6 @@ async def text_2_image(scene: int,
         await stream_output(type='logs',
                       output=f'Image downloaded successfully and saved at {saving_path}',
                       websocket=socket)
-
-    
 
 
 # Text to voice
@@ -130,8 +130,9 @@ async def text_2_voice(scene: int,
                        text: str,
                        cfg,
                        voice_id: str = "71c6c3eb-98ca-4a05-8d6b-f8c2b5f9f3a3",
-                       emotion: str = None, name: str = None,
-                       speed: str = None, 
+                       emotion: str = 'Happy', 
+                       name: str = None,
+                       speed= 1.5, 
                        socket=None):
     '''
     emotion
@@ -144,6 +145,7 @@ async def text_2_voice(scene: int,
     Dull - Dull
 
     '''
+    await stream_output("logs", f"\n🔎 Generate voice over for: '{text}'...", socket)
     url = "https://app.coqui.ai/api/v2/samples"
     API = os.getenv('COQUI_API')
     headers = {
@@ -155,14 +157,23 @@ async def text_2_voice(scene: int,
                "name": name, "speed": speed}
     payload = {key: value for key, value in payload.items() \
                if value is not None}
-    response = requests.post(url, json=payload, headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json=payload, headers=headers)
+
     audio_url = json.loads(response.text)["audio_url"]
     saving_path = os.path.join(cfg.compile_video_dir, f'scene_{scene}_voice.wav')
     await download_audio(audio_url=audio_url, 
                    save_path=saving_path,
                    socket=socket)
 
-    
+async def texts_2_images_voices(scenes, cfg, socket):
+    tasks_voices = [text_2_voice(scene=i, text=scene['voice'], cfg=cfg, socket=socket) \
+             for i, scene in enumerate(scenes)]
+    tasks_images = [text_2_image(scene=i, prompt=scene['image'], cfg=cfg, socket=socket) \
+             for i, scene in enumerate(scenes)]
+    tasks = tasks_voices + tasks_images
+    await asyncio.gather(*tasks)    
+
 
 # Function to create a video from images
 def images_to_video(image_paths, output_video_path, fps):

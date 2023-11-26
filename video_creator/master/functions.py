@@ -17,7 +17,7 @@ async def generate_script(blog, target_audience, purpose, cfg):
 async def generate_caption(script: str, platform, cfg):
     caption_instruction = generate_caption_instruction(script=script, platform=platform)
     messages = []
-    messages.append({{'role': 'user', 'content': caption_instruction}})
+    messages.append({'role': 'user', 'content': caption_instruction})
     script = await create_chat_completion(
         messages=messages,
         model=cfg.smart_llm_model,
